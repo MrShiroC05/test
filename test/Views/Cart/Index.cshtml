@@ -41,7 +41,8 @@
                     <b>@(item.ExtendCart.Qut * item.ExtendCart.Price)</b>
             </td>
             <td>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Food" asp-action="InfoFood" asp-route-id="@item.IdFood">รายละเอียดอาหาร</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Food" asp-action="InfoFood" asp-route-id="@item.IdFood">รายละเอียดอาหาร</a>
+                <a class="nav-link text-danger" asp-area="" asp-controller="Cart" asp-action="Cancel" asp-route-id="@item.Id">ยกเลิก</a>
             </td>
         </tr>
 }

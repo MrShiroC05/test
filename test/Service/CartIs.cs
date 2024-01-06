@@ -6,5 +6,6 @@
         Task<IEnumerable<Cart>> AllCart();
         Task AddCart(IdentityUser user, Food food, int qul);
         Task<Cart> GetCartByCartId(int cartId);
+        Task Cencel(Cart cart, IdentityUser user);
     }
 }

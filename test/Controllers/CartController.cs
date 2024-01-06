@@ -27,5 +27,13 @@ namespace test.Controllers
 
             return View(table);
         }
+        public async Task<IActionResult> Cancel(int id)
+        {
+            var cart = await _context.Cart.FindAsync(id);
+            var user = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
+            await _cart.Cencel(cart, user);
+
+            return RedirectToAction("Index");
+        }
     }
 }

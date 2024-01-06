@@ -73,5 +73,24 @@ namespace test.Service
             var result = all.Find(p => p.Id == cartId);
             return result;
         }
+
+        public async Task Cencel(Cart cart, IdentityUser user)
+        {
+            var table = await _context.TableRevenue.ToListAsync();
+            var deletcart = table.Find(p => p.CartId == cart.Id && p.UserId == user.Id);
+            if (deletcart != null)
+            {
+                // ลบข้อมูลทั้ง ตาราง และ ตะกร้า
+                _context.TableRevenue.Remove(deletcart);
+                _context.Cart.Remove(cart);
+
+                // เปลี่ยนขอ้มูลของอาหาร
+                var result = await _context.Food.FindAsync(cart.IdFood);
+                result.ExtendFood.Qut += cart.ExtendCart.Qut;
+                _context.Food.Update(result);
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
