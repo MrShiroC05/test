@@ -1,6 +1,9 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using test.Data;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
+global using test.Data;
+global using test.Models;
+global using test.Service;
+global using System.ComponentModel.DataAnnotations;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ContextConnection") ?? throw new InvalidOperationException("Connection string 'ContextConnection' not found.");
 
@@ -14,10 +17,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredLength = 3;
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
-}).AddEntityFrameworkStores<Context>();
+}).AddRoles<IdentityRole>().AddEntityFrameworkStores<Context>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<FoodIS, FoodS>();
+builder.Services.AddScoped<RoleIS, RoleS>();
+builder.Services.AddScoped<CartIS, CartS>();
+builder.Services.AddScoped<UserIS, UserS>();
 
 var app = builder.Build();
 
@@ -30,10 +38,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();

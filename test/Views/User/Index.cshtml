@@ -1,0 +1,32 @@
+﻿@model List<IdentityUser>
+@inject UserManager<IdentityUser> userManager
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Role</th>
+            <th scope="col">Banned</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var user in Model)
+        {
+            var roleUser = await userManager.GetRolesAsync(user);
+            <tr>
+                <th scope="row">@user.Id</th>
+                <td>@user.UserName</td>
+                <td>@foreach(var role in roleUser)
+                    {
+                        @role
+                    }
+                </td>
+                <td>
+                    <a>Ban</a>
+                    <a asp-action="AddRole" asp-route-id="@user.Id">Add Role</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

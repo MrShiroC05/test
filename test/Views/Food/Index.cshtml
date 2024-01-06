@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model dynamic
+<div class="my-container">
+    <div class="category-tag">
+        <u><h1>หมวดหมู่</h1></u>
+
+       
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="full">
+                <a asp-action="CreateCategory" class="btn btn-outline-dark">สร้างหมวดหมู่</a>
+            </div>
+        }
+
+        <ul class="navbar-nav flex-grow-1">
+            @foreach (var a in Model.category)
+            {
+                <li class="nav-item ">
+                    <div class="scmd cate">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-outline-info cmd edit">Edit</a>
+                            <a class="btn btn-outline-dark">@a.Name</a>
+                            <a class="btn btn-outline-warning cmd delete" asp-action="DeletCategory" asp-route-id="@a.Id">Delet</a>
+                        }
+                        else
+                        {
+                            <a></a>
+                            <a class="btn btn-outline-dark">@a.Name</a>
+                            <a></a>
+                        }
+
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="list-food">
+        <h1>รายชื่ออาหาร</h1>
+        <div class="list">
+            <a asp-action="CreateFood" class="btn btn-outline-dark my-card">สร้างอาหาร</a>
+            @foreach (var a in Model.food)
+            {
+                <div class="my-card" style="background: url(@a.Image)">
+                    <div class="text">
+                        <h1>@a.Name</h1>
+                        <h3>ราคา : @a.ExtendFood.Price บาท</h3>
+                        <a class="btn btn-dark" asp-action="InfoFood" asp-route-id="@a.Id"><h5>รายละเอียด</h5></a>
+                    </div>
+                </div>
+            }
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿@model test.Models.Food
+
+@{
+    ViewData["Title"] = "สร้างอาหาร";
+}
+
+<h1>CreateFood</h1>
+
+<h4>Food</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateFood">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExtendFood.Qut" class="control-label"></label>
+                <input asp-for="ExtendFood.Qut" class="form-control" />
+                <span asp-validation-for="ExtendFood.Qut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExtendFood.Price" class="control-label"></label>
+                <input asp-for="ExtendFood.Price" class="form-control" />
+                <span asp-validation-for="ExtendFood.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class ="form-control" >
+                    <option disabled selected>โปรดเลือก</option>
+                    @foreach (var cate in await _foodService.ListCategory())
+                    {
+                        <option value="@cate.Id">@cate.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

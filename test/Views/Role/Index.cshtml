@@ -1,0 +1,18 @@
+﻿@model List<IdentityRole>
+<a asp-action="CreateRole">Create</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var a in Model)
+        {
+            <tr>
+                <th scope="row">@a.Name</th>
+            </tr>
+        }
+
+    </tbody>
+</table>

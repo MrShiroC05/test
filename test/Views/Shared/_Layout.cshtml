@@ -28,7 +28,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Index">List Food</a>
                         </li>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Master"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">List user</a>
+                            </li>
+                            @if (User.IsInRole("Master"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark">Add status</a>
+                                </li>
+                            }
+                        }
+                        
                     </ul>
+                </div>
+                <div>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
