@@ -2,6 +2,8 @@
 
 namespace test.Controllers
 {
+    [Authorize(Roles = "Master")]
+
     public class RoleController : Controller
     {
         private readonly RoleIS _role;

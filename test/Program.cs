@@ -4,6 +4,8 @@ global using test.Data;
 global using test.Models;
 global using test.Service;
 global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ContextConnection") ?? throw new InvalidOperationException("Connection string 'ContextConnection' not found.");
 

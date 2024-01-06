@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace test.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly RoleIS _role;

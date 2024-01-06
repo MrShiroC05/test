@@ -37,7 +37,10 @@
     <div class="list-food">
         <h1>รายชื่ออาหาร</h1>
         <div class="list">
-            <a asp-action="CreateFood" class="btn btn-outline-dark my-card">สร้างอาหาร</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="CreateFood" class="btn btn-outline-dark my-card">สร้างอาหาร</a>
+            }
             @foreach (var a in Model.food)
             {
                 <div class="my-card" style="background: url(@a.Image)">

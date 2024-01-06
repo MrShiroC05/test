@@ -1,13 +1,13 @@
 ﻿@model List<IdentityUser>
 @inject UserManager<IdentityUser> userManager
 
+<h1>มีผู้ใช้ทั้งหมด <u> @Model.Count.ToString("#,##0")</u> คน</h1>
 <table class="table">
     <thead>
         <tr>
             <th scope="col">Id</th>
             <th scope="col">UserName</th>
             <th scope="col">Role</th>
-            <th scope="col">Banned</th>
         </tr>
     </thead>
     <tbody>
@@ -21,10 +21,6 @@
                     {
                         @role
                     }
-                </td>
-                <td>
-                    <a>Ban</a>
-                    <a asp-action="AddRole" asp-route-id="@user.Id">Add Role</a>
                 </td>
             </tr>
         }

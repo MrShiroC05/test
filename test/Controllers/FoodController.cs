@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
 
 namespace test.Controllers
 {
@@ -29,11 +29,14 @@ namespace test.Controllers
             return View(new { category, food });
         }
         // Create
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateFood()
         {
             return View();
         }
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateFood(Food food)
         {
             if (ModelState.IsValid)
@@ -43,11 +46,13 @@ namespace test.Controllers
             }
             return View();
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateCategory()
         {
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateCategory(Category category)
         {
             if (ModelState.IsValid)
@@ -60,11 +65,13 @@ namespace test.Controllers
         }
 
         // Edit
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditFood(int id)
         {
             return View(await _foodSv.SearchFood(id));
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditFood(Food food)
         {
            if(ModelState.IsValid)
@@ -74,11 +81,13 @@ namespace test.Controllers
             }
             return View(await _foodSv.SearchFood(food.Id));
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteFood(int id)
         {
             await _foodSv.DeleteFood(id);
             return RedirectToAction("Index");
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeletCategory(int id)
         {
             await _foodSv.DeleteCate(id);
@@ -91,6 +100,7 @@ namespace test.Controllers
             return View(await _foodSv.SearchFood(id));
         }
 
+        [Authorize]
         public async Task<IActionResult> AddCart(int id, int qul = 1)
         {
             var user = await _userManager.FindByIdAsync(_userManager.GetUserId(User));

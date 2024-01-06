@@ -9,6 +9,7 @@ namespace test.Controllers
         {
             _userManager = UserManager;
         }
+        [Authorize(Roles = "Admin, Master")]
         public IActionResult Index()
         {
             return View();

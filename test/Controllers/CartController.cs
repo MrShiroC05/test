@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace test.Controllers
@@ -21,6 +22,8 @@ namespace test.Controllers
             
             return View(await _cart.YouCart(user));
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Table()
         {
             var table = await _context.TableRevenue.ToListAsync();
