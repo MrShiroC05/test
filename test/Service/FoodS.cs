@@ -3,6 +3,7 @@ using test.Models;
 
 namespace test.Service
 {
+    // Category และ food รวบเป็นอันเดียวกัน
     public class FoodS : FoodIS
     {
         public FoodS(Context context)
@@ -46,6 +47,8 @@ namespace test.Service
             var delete = await SearchCategory(id);
             _context.Remove(delete);
             var foodFC = await _context.Food.ToListAsync();
+
+            // เช็คว่ามีอาหารในหมวดนี้ไหม ถ้ามี ลบ มัน
             foodFC.ForEach(food =>
             {
                 if (food.CategoryId == id)
