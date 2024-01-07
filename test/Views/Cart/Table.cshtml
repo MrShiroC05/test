@@ -4,33 +4,59 @@
 @inject CartIS _cart
 @{
     var all = await _cart.AllCart();
-    double sum = 0;
-    foreach(var cart in all)
-    {
-        sum += (cart.ExtendCart.Price * cart.ExtendCart.Qut);
-    }
-}
-<h1>ราคารวม : @sum.ToString("#,##0.00") บาท</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Username</th>
-            <th scope="col">ชื่ออาหาร</th>
-            <th scope="col">จำนวนที่ซื้อ</th>
-            <th scope="col">ราคาสุทธิ (บาท)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var list in Model)
-        {
-            Cart cart = await _cart.GetCartByCartId(list.CartId);
 
-            <tr>
-                <th scope="row">@await _user.GetUsernameByID(list.UserId)</th>
-                <td>@cart.Name</td>
-                <td>@cart.ExtendCart.Qut</td>
-                <td>@(cart.ExtendCart.Price * cart.ExtendCart.Qut)</td>
-            </tr>
+    double sum = 0;
+    Model.ForEach(table =>
+    {
+        var result = all.FirstOrDefault(p=> p.Id == table.CartId);
+        if(result != null)
+        {
+            sum += (result.ExtendCart.Price * result.ExtendCart.Qut);
         }
-    </tbody>
-</table>
+    });
+}
+<div class="my-container">
+    <div class="left-solit">
+        <ul class="navbar-nav flex-grow-1 list-ul-food">
+            <li>
+                <h1>ตัวกรอง สินค้า</h1>
+            </li>
+            <li class="nav-item ">
+                <a class="btn btn-outline-dark" asp-action="Table" asp-route-id="0">None</a>
+            </li>
+            @foreach (var food in all)
+            {
+                <li class="nav-item ">
+                    <a class="btn btn-outline-dark" asp-action="Table" asp-route-id="@food.Id">@food.Name</a>
+                </li>
+            }
+        </ul>
+        
+    </div>
+    <div>
+        <h1>ราคารวม : @sum.ToString("#,##0.00") บาท</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">ชื่ออาหาร</th>
+                    <th scope="col">จำนวนที่ซื้อ</th>
+                    <th scope="col">ราคาสุทธิ (บาท)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var list in Model)
+                {
+                    Cart cart = await _cart.GetCartByCartId(list.CartId);
+
+                    <tr>
+                        <th scope="row">@await _user.GetUsernameByID(list.UserId)</th>
+                        <td>@cart.Name</td>
+                        <td>@cart.ExtendCart.Qut</td>
+                        <td>@(cart.ExtendCart.Price * cart.ExtendCart.Qut)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

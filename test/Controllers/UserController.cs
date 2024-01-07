@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace test.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Master")]
     public class UserController : Controller
     {
         private readonly RoleIS _role;
@@ -22,6 +22,26 @@ namespace test.Controllers
         {
             var list = await _context.Users.ToListAsync();
             return View(list);
+        }
+        [Authorize(Roles ="Master")]
+        public IActionResult AddRoleToUser(string id)
+        {
+            ViewBag.Id = id;
+            
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddRoleToUser(string role, string userId)
+        {
+            if(role != null && userId != null)
+            {
+                await _userManager.AddToRoleAsync(await _userManager.FindByIdAsync(userId), role);
+
+                return RedirectToAction("Index");
+            }
+            ViewBag.Id = userId;
+
+            return View();
         }
     }
 }

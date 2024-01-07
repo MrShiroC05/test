@@ -24,10 +24,28 @@ namespace test.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Table()
+        public async Task<IActionResult> Table(int id = 0)
         {
             var table = await _context.TableRevenue.ToListAsync();
 
+            if(id != 0)
+            {
+                // หา cart จาก food's id
+                var allCart = await _context.Cart.ToListAsync();
+                var result_1 = allCart.FindAll(x => x.IdFood == id);
+
+
+                var result_2 = new List<TableRevenue>();
+                table.ForEach(table =>
+                {
+                    var foundItem = result_1.Find(cart => table.CartId == cart.Id);
+                    if (foundItem != null)
+                    {
+                        result_2.Add(table);
+                    }
+                });
+                table = result_2;
+            }
             return View(table);
         }
         public async Task<IActionResult> Cancel(int id)

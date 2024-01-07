@@ -32,6 +32,11 @@ namespace test.Service
             _context.Update(food);
             await _context.SaveChangesAsync();
         }
+        public async Task EditeCate(Category cate)
+        {
+            _context.Category.Update(cate);
+            await _context.SaveChangesAsync();
+        }
         public async Task DeleteFood(int id)
         {
             var delete =  await SearchFood(id);
@@ -58,5 +63,7 @@ namespace test.Service
             });
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

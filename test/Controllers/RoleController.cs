@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using test.Service;
 
 namespace test.Controllers
 {
@@ -35,6 +36,7 @@ namespace test.Controllers
             }
             return View();
         }
+        
         
     }
 }

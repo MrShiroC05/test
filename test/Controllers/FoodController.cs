@@ -71,7 +71,6 @@ namespace test.Controllers
             return View(await _foodSv.SearchFood(id));
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditFood(Food food)
         {
            if(ModelState.IsValid)
@@ -80,6 +79,22 @@ namespace test.Controllers
                 return RedirectToAction("Index");
             }
             return View(await _foodSv.SearchFood(food.Id));
+        }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> EditeCategory(int id)
+        {
+            var result = await _foodSv.SearchCategory(id);
+            return View(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditeCategory(Category cate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            await _foodSv.EditeCate(cate);
+            return RedirectToAction("Index");
         }
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteFood(int id)

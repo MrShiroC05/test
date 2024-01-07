@@ -1,0 +1,21 @@
+﻿@{
+    var listRole = await _role.ListRole();
+}
+<div>
+    <form asp-action="AddRoleToUser">
+        <div>
+            <input name="userId" value="@ViewBag.Id" class="form-control" readonly />
+        </div>
+        <select class="form-control" name="role">
+            <option disabled selected>โปรดเลือก</option>
+            @foreach (var role in listRole)
+            {
+                <option value="@role.Name">@role.Name</option>
+            }
+        </select>
+
+        <div class="form-group">
+            <input type="submit" value="Add" class="btn btn-primary"/>
+        </div>
+    </form>
+</div>

@@ -14,14 +14,19 @@
         @foreach(var user in Model)
         {
             var roleUser = await userManager.GetRolesAsync(user);
+            
             <tr>
                 <th scope="row">@user.Id</th>
                 <td>@user.UserName</td>
                 <td>@foreach(var role in roleUser)
                     {
-                        @role
+                        var comma = (role != roleUser[roleUser.Count-1]) ? ", " : "";
+                        @role @comma
                     }
                 </td>
+                <th>
+                    <a asp-action="AddRoleToUser" asp-route-id="@user.Id" class="btn btn-outline-dark">Add Role</a>
+                </th>
             </tr>
         }
     </tbody>

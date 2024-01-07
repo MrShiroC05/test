@@ -50,5 +50,6 @@ namespace test.Service
                 _userManager.AddToRoleAsync(user, role.Name);
             }
         }
+
     }
 }
